@@ -4,6 +4,7 @@
 #Descargar paquetes----
 install.packages("tidyverse")
 install.packages("ggplot2")
+install.packages("dyplr")
 
 #Cargar paquetes----
 library(tidyverse)
@@ -12,6 +13,9 @@ library(ggplot2)
 library(tibble)
 
 #Crear tibble empresas de balance_2014----
+
+balances_2014 <- read.xlsx("Data/balances_2014.xlsx",detectDates=TRUE)
+balance_2014 <- data.frame()
 
 #Manipular base y crear dataframe 
 
