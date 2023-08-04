@@ -12,7 +12,8 @@ library(magrittr)
 
 #Crear tibble empresas de balance_2014----
 
-balances_2014 <- read.xlsx("Data/balances_2014.xlsx",detectDates=TRUE)
+balances_2014 <- read.xlsx("Data/balances_2014.xlsx")
+
 balances_2014 <- data.frame(balances_2014)
 
 #Manipular base y crear dataframe 
