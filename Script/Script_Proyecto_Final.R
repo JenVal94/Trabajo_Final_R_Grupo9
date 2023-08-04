@@ -1,11 +1,6 @@
 #Script Proyecto Final 
 #Grupo 9: Denisse Ichau, Tamia Sisa, Jeniffer Valbuena
 
-#Descargar paquetes----
-install.packages("tidyverse")
-install.packages("ggplot2")
-install.packages("dyplr")
-install.packages("magrittr")
 
 #Cargar paquetes----
 library(tidyverse)
