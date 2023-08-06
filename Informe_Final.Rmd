@@ -1,0 +1,192 @@
+---
+title: "Informe_ProyectoFinalR_Grupo9"
+author: "Denisse Ichau, Tamia Gualán, Jeniffer Valbuena"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Trabajo Final Grupo 9
+
+**Docente:** Zulema Bazurto
+
+**Grupo:** 9
+
+### Introducción:
+
+Bienvenidos al emocionante proyecto donde exploramos el poder de R Studio para el análisis exhaustivo de datos empresariales. Este trabajo se centra en el análisis de datos financieros y tipo de empresas, utilizando las capacidades avanzadas de R Studio para revelar patrones, tendencias y comportamiento de dichas empresas, con la finalidad de permitir al usuario final de dicha base la toma de decisiones.
+
+R studio proporciona una robusta sintaxis y su rica biblioteca de paquetes que permiten un abordaje flexible y altamente personalizable para afrontar desafíos específicos de análisis empresarial. Además, su capacidad para integrar análisis de datos y creación de informes proporciona una plataforma coherente y eficiente para la generación de perspectivas que puedan informar decisiones estratégicas. En síntesis, este proyecto tiene como objetivo analizar el comportamiento de los tipos de empresas registradas en Ecuador, identificando tendencias, fluctuaciones y posibles correlaciones entre diferentes indicadores económicos. A través de la rigurosidad metodológica y el enfoque técnico, aspiramos a desvelar percepciones valiosas que puedan brindar información sobre el comportamiento de las empresas registradas en la súper intendencia de compañías.
+
+### Objetivos:
+
+Analizar el comportamiento de los tipos de empresas registradas en Ecuador, identificando tendencias, fluctuaciones y posibles correlaciones entre diferentes indicadores económicos mediante el programa R studio.
+
+### Descripción de los datos:
+
+En el Tibble de la Base de datos 2014 tiene como origen desde la Superintendencia de Companias (2009) de 47033 observaciones y 347 variables. Por fines del análisis de los datos se realizó un tibble más pequeño que solo contenga las 23 variables de interés para el presente estudio, en el cual se consideraron las principales variables para el cálculo y análisis de los indicadores financieros para el entendimiento a detalle de la situación actual de las empresas. Para lo cual, se han contado con empresas de caracter: pequeñas, medianas, grandes y microempresas ubicadas en varios países entre ellas, Ecuador, sin embargo, para el análisis de los indicadores financieros unicamente se consideraron las empresas en Ecuador.
+
+### Análisis para responder preguntas:
+
+1.  **¿El endeudamiento del activo fue mayor en empresas micro más pequeñas vs. grandes?**
+
+    Si, esto debido a que, al no tener grandes fuentes de líquidez, las pequeñas y microempresas presentan más problemas a la hora de enfrentar sus deudas, ya que, sus flujos de entrada son mínimos.
+
+    Tal como se puede observar el endeudamiento del activo:
+
+    -   Pequeñas y microempresas: 6,19
+
+    -   Grandes empresas: 1,2
+
+2.  **¿La liquidez por tipo de compañía es diferente entre aquellas empresas que tienen más de 60 trabajadores directos y que cuenta con 3. 100 a 800 trabajadores administrativos?**
+
+    Si existe una diferencia marcada en cuanto a la líquidez. principalmente con el tipo de empresas "Anónimas" y "Sucursal Extranjera", ya que, estas cuentan con más de 60 trabajadores directos y 3100 a 800 trabajadores administrativos. Con esto se evidencia que este tipo de empresas responden a la capacidad financiera de los distintos negocios para obtener negocio en efectivo.
+
+3.  El promedio de líquidez se muestra a continuación:
+
+{r echo=FALSE} knitr::kable(liquidez_promedio)
+
+```         
+-   Anónimas: 1,954,097
+
+-   Sucursal extranjera: 2,599,142
+```
+
+4.  **Describe el top 10 de empresas con mayor apalancamiento.**
+
+    En cuanto al apalancamiento, se determinó que las siguientes empresas tienen mayor capacidad de inversión (endeudamiento) para generar mayor porcentaje de rentabilidad al final de la inversión:
+
+    -   Adelca del Litoral
+
+    -   Fariball Holding Corp. CA.
+
+    -   Hiroaky S.A.
+
+    -   Mocanati S.A.
+
+    -   Minera El Paraíso S.A.
+
+    -   Voith Hydro LTDA.
+
+    -   Holding in Ferle Holferle S.A.
+
+    -   Terrarium S.A.
+
+    -   Ecuadesk S.A
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+**TAREAS ESPECÍFICAS**
+
+**a. Crea una tabla resumiendo el número total de empresas por actividad económica y por actividad económica por cada cantón. La tabla simplemente debe aparecer como un data frame o tibble en tu script.**
+
+```{r echo=FALSE}
+  knitr::kable(empresas_por_actividad)
+```
+
+```{r echo=FALSE}
+   knitr::kable(empresas_por_actividad_canton)
+```
+
+**b. Gráficamente muestra el comparativo de los indicadores financieros de liquidez y solvencia por Status y provincia.**
+
+```{r echo=FALSE}
+   ggplot(empresas3, aes(x = Status, y = Liquidez_corriente, fill = Provincia)) +
+ geom_bar(stat = "identity", position = "dodge") +
+ facet_wrap(~Status) +
+labs(title = "Comparación de Liquidez por Status y Provincia",
+      x = "Status",
+      y = "Liquidez",
+      fill = "Provincia")
+```
+
+```{r echo=FALSE}
+   ggplot(empresas3, aes(x = Provincia, y = Liquidez_corriente, fill = Status)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~Provincia) +
+  labs(title = "Comparación de Liquidez por Status y Provincia",
+       x = "Provincia",
+       y = "Liquidez",
+       fill = "Status")
+```
+
+```{r echo=FALSE}
+   ggplot(empresas2, aes(x = Status, y = Endeudamiento_del_activo, fill = Status)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~Provincia) +
+  labs(title = "Comparación de Solvencia endeudamiento activo por Status y Provincia",
+       y = "Endeudamiento activo",
+       fill = "Status")
+```
+
+```{r echo=FALSE}
+ ggplot(empresas4, aes(x = Status, y = Endeudamiento_patrimonial, fill = Status)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~Provincia) +
+  labs(title = "Comparación de Solvencia endeudamiento patrimonial por Status y Provincia",
+       y = "Endeudamiento patrimonial",
+       fill = "Status")  
+```
+
+```{r echo=FALSE}
+  ggplot(empresas5, aes(x = Status, y = Endeudamiento_del_Activo_fijo, fill = Status)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~Provincia) +
+  labs(title = "Comparación de Solvencia endeudamiento del activo fijo por Status y Provincia",
+       y = "Endeudamiento del activo fijo",
+       fill = "Status")
+```
+
+```{r echo=FALSE}
+  ggplot(empresas6, aes(x = Status, y = Apalancamiento, fill = Status)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~Provincia) +
+  labs(title = "Comparación de Solvencia Apalancamiento por Status y Provincia",
+       y = "Apalancamiento",
+       fill = "Status")
+```
+
+**c. Gráficamente muestra el comparativo de los indicadores financieros de liquidez y solvencia por tipo de empresa.**
+
+```{r echo=FALSE}
+ggplot(empresas3, aes(x = Tipo_de_empresas, y = Liquidez_corriente, fill = Tipo_de_empresas)) +   geom_bar(stat = "identity", position = "dodge") +   facet_wrap(~Tipo_de_empresas) +   labs(title = "Comparación de Liquidez por tipo de empresas",        y = "Liquidez_corriente",        fill = "Tipo de Empresas") 
+```
+
+```{r echo=FALSE}
+ggplot(empresas2, aes(x = Tipo_de_empresas, y = Endeudamiento_del_activo, fill = Tipo_de_empresas)) + geom_bar(stat = "identity", position = "dodge") + facet_wrap(~Tipo_de_empresas) + labs(title = "Comparación de Solvencia endeudamiento activo por Tipo de Empresas", y = "Endeudamiento activo", fill = "Tipo de empresas")
+```
+
+```{r echo=FALSE}
+ggplot(empresas4, aes(x = Tipo_de_empresas, y = Endeudamiento_patrimonial, fill = Tipo_de_empresas)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  facet_wrap(~Tipo_de_empresas) +
+  labs(title = "Comparación de Solvencia endeudamiento patrimonial por Tipo de empresas",
+       y = "Endeudamiento patrimonial",
+       fill = "Tipo de empresas")
+```
+
+```{r echo=FALSE}
+ggplot(empresas5, aes(x = Tipo_de_empresas, y = Endeudamiento_del_Activo_fijo, fill = Tipo_de_empresas)) +   geom_bar(stat = "identity", position = "dodge") +   facet_wrap(~Tipo_de_empresas) +   labs(title = "Comparación de Solvencia endeudamiento del activo fijo por Tipo de empresas",        y = "Endeudamiento del activo fijo",        fill = "Tipo de empresas")
+```
+
+```{r echo=FALSE}
+ggplot(empresas6, aes(x = Tipo_de_empresas, y = Apalancamiento, fill = Tipo_de_empresas)) + geom_bar(stat = "identity", position = "dodge") + facet_wrap(~Tipo_de_empresas) + labs(title = "Comparación de Solvencia Apalancamiento por Tipo de empresas", y = "Apalancamiento", fill = "Tipo de empresas") 
+```
+
+### Conclusiones:
+
+-   Las grandes empresas en el análisis dieron como resultado, que presentan mayor capacidad de líquidez por lo tanto el endeudamiento del activo es mayor, esto ya que, gracias a sus fuentes de ingresos por la razón de sus negocios es permitido realizar inversiones en favor de hacer crecer el capital.
+-   No era posible una correcta visualización de los datos, por lo que calculamos el mínimo y máximo de liquidez corriente y determinamos que hay un rango entre \$0 y \$1Millon. Con la finalidad de verificar que los cálculos esten correctos y las graficas funcionen, filtramos la información por la provincia de Pastaza como una muestra aleatoria y pudimos visualizar que la información es apropiada y los gràficos sirven tal como se puede observar en el gráfico Pastaza.
+
+```{r echo=FALSE}
+ ggplot(empresas_pastaza, aes(x = Status, y = Endeudamiento_del_activo)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Comparación de Solvencia 1 por Status y Provincia",
+       x = "Status",
+       y = "Solvencia")
+```
